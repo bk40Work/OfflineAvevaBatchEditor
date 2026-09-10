@@ -1,0 +1,26 @@
+/* AVEVA Batch Recipe Editor - Print Styles */
+
+@media print{
+  .toolbar,.drop-zone,.sidebar,.sidebar-overlay,.act-bar,.act-more,.act-btn{display:none!important}
+  body{background:#fff;font-size:11px}
+  .content{padding:0;max-width:100%}
+  .pf-up{break-inside:avoid;box-shadow:none;page-break-inside:avoid;border:1px solid #ccc;margin-bottom:8px}
+  .pf-op{break-inside:avoid;page-break-inside:avoid}
+  .pf-ph{break-inside:avoid;page-break-inside:avoid}
+  .parallel-box{break-inside:avoid;page-break-inside:avoid}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;page-break-inside:avoid}
+  .pf-up-hdr{background:#36398E!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pf-op-hdr{background:#f1f8e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table.dt th{background:#36398E!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .flow-ann{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .parallel-box{border:1px solid #009F3C;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#f0f7f2!important}
+  .lane-container{height:auto!important;min-height:0}
+  .lane{overflow:visible!important;height:auto!important}
+  .lane-body{overflow:visible!important;height:auto!important}
+  .lane-header{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#36398E!important}
+  .lane-ph{break-inside:avoid;page-break-inside:avoid}
+  .lane-trans{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pf-up-body{display:block!important}
+  .pf-op-body{display:block!important}
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVEVA Batch Recipe Editor - Syngenta</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/viewer.css">
+<link rel="stylesheet" href="css/nested-responsive.css">
+<link rel="stylesheet" href="css/lane-zoom.css">
+<link rel="stylesheet" href="css/editor.css">
+<link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>AVEVA Batch - Offline Recipe Editor</h1>
+            <div class="sub">Model: SC | ISA-88 Procedure</div>
+        </div>
+        <div id="versionBadge" style="display:none;cursor:pointer;text-align:right" onclick="showHistory()" title="Click to view revision history">
+            <div style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:4px;padding:4px 12px;display:inline-block">
+                <span style="color:#c8c9e8;font-size:0.72em;display:block;text-transform:uppercase;letter-spacing:0.5px">Version</span>
+                <span id="versionLabel" style="color:#fff;font-size:1.1em;font-weight:700">V1</span>
+            </div>
+            <div style="color:#c8c9e8;font-size:0.7em;margin-top:2px">&#x1F4CB; History</div>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button onclick="showNewRecipeDialog()">+ New Recipe</button>
+        <button class="primary" onclick="document.getElementById('fileInput').click()">Open XML</button>
+        <button class="sec" onclick="saveXML()">Save XML</button>
+        <input type="file" id="fileInput" accept=".xml" style="display:none">
+        <div class="sep"></div>
+        <button id="btnEdit" onclick="toggleEdit()">✎ Edit</button>
+        <div class="sep"></div>
+        <button onclick="printLaneView()">Print</button>
+        <div class="sep"></div>
+        <span style="font-size:0.82em;color:#666">Batch:</span>
+        <input type="number" id="batchOverride" placeholder="--" onchange="recalcBatch(this.value)">
+        <div class="sep"></div>
+        <button onclick="toggleSidebar()">Equipment &amp; Materials</button>
+    </div>
+
+    <div class="content">
+        <div class="drop-zone" id="dropZone">
+            <p style="color:#009F3C;font-size:1.1em;margin-bottom:6px">Drop Recipe XML Here or Click to Browse</p>
+            <p style="color:#666;font-size:0.85em">Supports AVEVA Batch B2MML format</p>
+        </div>
+
+        <!-- Top panel cards for header/equipment/materials -->
+        <div id="topPanels">
+            <div class="card collapsed" id="cardHeader">
+                <h3 onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="caret">&#9654;</span>Recipe Header</span></h3>
+                <div class="card-body"><div class="card-grid" id="headerGrid"></div></div>
+            </div>
+            <div class="card collapsed" id="cardEq">
+                <h3 onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="caret">&#9654;</span>Equipment Requirements</span></h3>
+                <div class="card-body" id="eqBody"></div>
+            </div>
+            <div class="card collapsed" id="cardMat">
+                <h3 onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="caret">&#9654;</span>Bill of Materials</span></h3>
+                <div class="card-body" id="matBody"></div>
+            </div>
+        </div>
+
+        <!-- Lane-only recipe view -->
+        <div id="laneView">
+            <div class="lane-container">
+                <div class="lane"><div class="lane-header"><span>Unit Procedures</span><span class="lane-zoom" aria-label="Zoom Unit Procedures lane"><button id="laneZoomOut_up" type="button" title="Zoom out Unit Procedures lane" onclick="laneZoomChange('up',-10)">−</button><button id="laneZoomLabel_up" type="button" title="Reset Unit Procedures lane zoom" onclick="laneZoomReset('up')">100%</button><button id="laneZoomIn_up" type="button" title="Zoom in Unit Procedures lane" onclick="laneZoomChange('up',10)">+</button></span></div><div class="lane-body" id="laneUPList"></div></div>
+                <div class="lane"><div class="lane-header"><span>Operations</span><span class="lane-zoom" aria-label="Zoom Operations lane"><button id="laneZoomOut_op" type="button" title="Zoom out Operations lane" onclick="laneZoomChange('op',-10)">−</button><button id="laneZoomLabel_op" type="button" title="Reset Operations lane zoom" onclick="laneZoomReset('op')">100%</button><button id="laneZoomIn_op" type="button" title="Zoom in Operations lane" onclick="laneZoomChange('op',10)">+</button></span></div><div class="lane-body" id="laneOpList"></div></div>
+                <div class="lane lane-wide"><div class="lane-header"><span>Phases</span><span class="lane-zoom" aria-label="Zoom Phases lane"><button id="laneZoomOut_ph" type="button" title="Zoom out Phases lane" onclick="laneZoomChange('ph',-10)">−</button><button id="laneZoomLabel_ph" type="button" title="Reset Phases lane zoom" onclick="laneZoomReset('ph')">100%</button><button id="laneZoomIn_ph" type="button" title="Zoom in Phases lane" onclick="laneZoomChange('ph',10)">+</button></span></div><div class="lane-body" id="lanePhList"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar drawer -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-hdr"><h3>Equipment &amp; Materials</h3><button class="sidebar-close" onclick="closeSidebar()">&times;</button></div>
+        <div class="sidebar-body" id="sidebarBody"></div>
+    </div>
+
+
+
+
+    <!-- Revision History modal -->
+    <div id="histOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000" onclick="closeHistory()"></div>
+    <div id="histDialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:2001;width:560px;max-width:95vw;max-height:80vh;display:none;flex-direction:column">
+        <div style="background:#36398E;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+            <span style="font-weight:600;font-size:0.95em">Revision History — <span id="hist_recipe_id"></span></span>
+            <button onclick="closeHistory()" style="background:none;border:none;color:#fff;font-size:1.2em;cursor:pointer">&times;</button>
+        </div>
+        <div id="histBody" style="overflow-y:auto;padding:0;flex:1"></div>
+    </div>
+
+    <!-- Save XML dialog -->
+    <div id="svOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000" onclick="cancelSaveDialog()"></div>
+    <div id="svDialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:2001;width:440px;max-width:95vw">
+        <div style="background:#36398E;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-weight:600;font-size:0.95em">Save Recipe XML</span>
+            <button onclick="cancelSaveDialog()" style="background:none;border:none;color:#fff;font-size:1.2em;cursor:pointer">&times;</button>
+        </div>
+        <div style="padding:20px">
+            <div style="background:#f0f7f2;border:1px solid #009F3C;border-radius:4px;padding:8px 12px;margin-bottom:16px;font-size:0.85em;color:#36398E">
+                Saving as version <strong id="sv_version">V1</strong>
+            </div>
+            <div id="sv_structural_notice" style="display:none;font-size:0.82em;color:#e65100;margin-bottom:12px;padding:6px 10px;background:#fff3e0;border-radius:4px;border-left:3px solid #ff9800"></div>
+            <div id="sv_last" style="display:none;font-size:0.78em;color:#888;margin-bottom:14px;padding:6px 10px;background:#f8f9fa;border-radius:4px;border-left:3px solid #ddd"></div>
+            <div style="margin-bottom:14px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Author <span style="color:#d32f2f">*</span></label>
+                <input id="sv_author" type="text" placeholder="Your name or initials" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit">
+            </div>
+            <div style="margin-bottom:20px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Comment <span style="color:#d32f2f">*</span></label>
+                <textarea id="sv_comment" rows="3" placeholder="Describe what was changed in this version..." style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit;resize:vertical"></textarea>
+            </div>
+            <div id="sv_error" style="display:none;color:#d32f2f;font-size:0.82em;margin-bottom:10px;padding:6px 10px;background:#ffebee;border-radius:4px"></div>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+                <button onclick="cancelSaveDialog()" style="padding:8px 16px;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;font-size:0.85em">Cancel</button>
+                <button onclick="confirmSaveXML()" style="padding:8px 16px;border:none;border-radius:4px;background:#009F3C;color:#fff;cursor:pointer;font-size:0.85em;font-weight:500">Save &amp; Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Recipe dialog -->
+    <div id="newRecipeOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000" onclick="cancelNewRecipeDialog()"></div>
+    <div id="newRecipeDialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:2001;width:420px;max-width:95vw">
+        <div style="background:#36398E;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-weight:600;font-size:0.95em">New Recipe</span>
+            <button onclick="cancelNewRecipeDialog()" style="background:none;border:none;color:#fff;font-size:1.2em;cursor:pointer">&times;</button>
+        </div>
+        <div style="padding:20px">
+            <div style="margin-bottom:14px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Recipe ID <span style="color:#d32f2f">*</span></label>
+                <input id="nr_id" type="text" placeholder="e.g. GM_A8207M" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit">
+            </div>
+            <div style="margin-bottom:14px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Description</label>
+                <input id="nr_desc" type="text" placeholder="e.g. Celest 025 FS" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit">
+            </div>
+            <div style="margin-bottom:14px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Product ID</label>
+                <input id="nr_product" type="text" placeholder="e.g. 178080" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit">
+            </div>
+            <div style="margin-bottom:20px">
+                <label style="display:block;font-size:0.8em;color:#666;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">Batch Size (kg)</label>
+                <input id="nr_batch" type="number" placeholder="e.g. 8000" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:4px;font-size:0.9em;font-family:inherit">
+            </div>
+            <div id="nr_error" style="display:none;color:#d32f2f;font-size:0.82em;margin-bottom:10px;padding:6px 10px;background:#ffebee;border-radius:4px"></div>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+                <button onclick="cancelNewRecipeDialog()" style="padding:8px 16px;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;font-size:0.85em">Cancel</button>
+                <button onclick="confirmNewRecipe()" style="padding:8px 16px;border:none;border-radius:4px;background:#009F3C;color:#fff;cursor:pointer;font-size:0.85em;font-weight:500">Create Recipe</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Stage 4A: closed N-way branch creation dialog -->
+    <div id="branchCreateOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000" onclick="cancelBranchCreateDialog()"></div>
+    <div id="branchCreateDialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:2001;width:620px;max-width:95vw;max-height:88vh;overflow:auto">
+        <div style="background:#36398E;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center"><strong>Create blank branch</strong><button onclick="cancelBranchCreateDialog()" style="background:none;border:none;color:#fff;font-size:1.2em;cursor:pointer">&times;</button></div>
+        <div style="padding:16px">
+            <p id="branchCreateAnchor" class="branch-create-anchor"></p>
+            <p class="branch-create-help">Choose the execution mode and lane count. The editor creates AVEVA DUMMY slots for every lane; select a slot afterwards to add its first filtered Process Phase or Transfer.</p>
+            <div class="branch-create-config">
+                <fieldset><legend>Execution</legend><label><input type="radio" name="branchCreateMode" value="All" checked> All — execute every lane (Parallel)</label><label><input type="radio" name="branchCreateMode" value="Single"> Single — execute one lane (Serial)</label></fieldset>
+                <label class="branch-create-count">Lanes <input id="branchCreateCount" type="number" min="2" value="2" onchange="renderBranchCreateLanes()"></label>
+            </div>
+            <div id="branchCreateLanes" class="branch-create-lanes"></div>
+            <div id="branchCreateError" class="branch-create-error" role="alert"></div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px"><button onclick="cancelBranchCreateDialog()" class="branch-create-cancel">Cancel</button><button onclick="confirmBranchCreate()" class="branch-create-confirm">Create blank branch</button></div>
+        </div>
+    </div>
+
+    <!-- Stage 6U: explicit AVEVA loop target selector -->
+    <div id="loopCreateOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:2000" onclick="cancelLoopAfterNodeDialog()"></div>
+    <div id="loopCreateDialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.25);z-index:2001;width:560px;max-width:95vw">
+      <div style="background:#36398E;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between"><strong>Add loop after node</strong><button onclick="cancelLoopAfterNodeDialog()" style="background:none;border:none;color:#fff;font-size:1.2em;cursor:pointer">&times;</button></div>
+      <div style="padding:16px"><p id="loopCreateAnchor" class="branch-create-anchor"></p><label style="display:block;margin-top:12px;font-weight:600">Loop-back target</label><select id="loopTarget" style="width:100%;margin-top:5px;padding:7px"></select><label style="display:block;margin-top:12px;font-weight:600">Condition</label><input id="loopCondition" style="width:100%;margin-top:5px;padding:7px" type="text"><div id="loopCreateError" class="branch-create-error" role="alert"></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px"><button onclick="cancelLoopAfterNodeDialog()" class="branch-create-cancel">Cancel</button><button onclick="confirmLoopAfterNode()" class="branch-create-confirm">Create loop</button></div></div>
+    </div>
+
+    <!-- Phase picker panel (floating) -->
+    <div class="phase-picker" id="phasePicker">
+        <div class="phase-picker-hdr"><span id="pickerTitle">Add Phase</span><button onclick="closePicker()">&times;</button></div>
+        <div class="phase-picker-body" id="pickerBody"></div>
+    </div>
+    <div class="phase-picker" id="processClassPicker" role="dialog" aria-modal="true" aria-label="Add process class">
+        <div class="phase-picker-hdr"><span>Add process class</span><button onclick="closeProcessClassPicker()" title="Cancel">&times;</button></div>
+        <div class="phase-picker-body" id="processClassPickerBody"></div>
+    </div>
+
+    <!-- Config (site-specific data) - loaded FIRST -->
+    <script src="config/model_SC.js"></script>
+    <script src="config/materials_SC.js"></script>
+
+    <!-- Application scripts (load order matters - dependencies first) -->
+    <script src="js/app.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/xml-authority.js"></script>  <!-- V10 canonical XML authority -->
+    <script src="js/equipment-instances.js"></script>
+    <script src="js/materials.js"></script>
+    <script src="js/branch-utils.js"></script>  <!-- FIRST -->
+    <script src="js/branch-display.js"></script>  <!-- display-only closed-branch detector -->
+    <script src="js/recursive-branch-display.js"></script>
+    <script src="js/nested-branch-render.js"></script>
+    <script src="js/lane-movement.js"></script>  <!-- retained legacy lane movement -->
+    <script src="js/global-movement.js"></script>  <!-- Stage 8A graph relocation -->
+    <script src="js/xml-normal-route-positions.js"></script>  <!-- V10.3 XML normal-route move positions -->
+    <script src="js/xml-boundary-movement.js"></script>  <!-- V10.4 XML link-boundary movement -->
+    <script src="js/xml-transition-movement.js"></script>  <!-- V10.7 ordinary Transition movement -->
+    <script src="js/xml-branch-lane-movement.js"></script>  <!-- V10.8 XML branch-lane movement -->
+    <script src="js/branch-create.js"></script>  <!-- Stage 4A closed N-way branch creation -->
+    <script src="js/join-insert.js"></script>  <!-- level-independent branch join insertion -->
+    <script src="js/universal-actions.js"></script>  <!-- common action surface and join continuation -->
+    <script src="js/branch-collapse.js"></script>  <!-- Stage 4C confirmed closed-branch removal -->
+    <script src="js/graph-delete.js"></script>  <!-- Stage 7H guarded canonical graph deletion -->
+    <script src="js/viewer.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/picker.js"></script>
+    <script src="js/process-class-picker.js"></script>
+    <script src="js/lane-zoom.js"></script>  <!-- independent visual lane zoom -->
+    <script src="js/lane.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/print.js"></script>
+    <script>applyAllLaneZoom();</script>
+</body>
+</html>

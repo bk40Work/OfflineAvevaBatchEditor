@@ -1,0 +1,131 @@
+/* Stage 6B.2 — responsive nested branch lanes.
+   Each branch owns its overflow, preventing wide nesting from widening the page. */
+.nested-operation-graph,
+.lane-branch,
+.lane-branch-lane {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.lane-branch > .lane-branch-lanes {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lane-branch > .lane-branch-lanes > .lane-branch-lane {
+  flex: 1 0 260px;
+  min-width: 260px;
+  /* A lane must not inherit a child's intrinsic width. Its child viewport owns overflow. */
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Content may expand a lane while sibling lanes remain readable. */
+.lane-branch-lane .lane-ph,
+.lane-branch-lane .lane-dummy {
+  min-width: 240px;
+  max-width: none;
+  overflow-wrap: anywhere;
+}
+
+.lane-branch-lane .lph-name,
+.lane-branch-lane .lph-parent,
+.lane-branch-lane .lph-param,
+.lane-branch-lane .lph-value,
+.lane-branch-lane .lph-material {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* A nested block grows naturally inside its parent lane, then scrolls locally. */
+.lane-branch-nested {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+}
+
+.lane-branch-nested > .lane-branch-lanes {
+  min-width: 0;
+}
+
+.lane-branch-fork,
+.lane-branch-join {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .lane-branch > .lane-branch-lanes > .lane-branch-lane { flex-basis: 220px; min-width: 220px; }
+  .lane-branch-lane .lane-ph,
+  .lane-branch-lane .lane-dummy { min-width: 200px; }
+}
+
+@media print {
+  .lane-branch > .lane-branch-lanes {
+    overflow: visible !important;
+    width: auto !important;
+    max-width: none !important;
+    scrollbar-gutter: auto;
+  }
+  .lane-branch-nested { width: auto !important; min-width: 0 !important; }
+  .lane-branch > .lane-branch-lanes > .lane-branch-lane { min-width: 0 !important; width: auto !important; }
+}
+/* Stage 6B.4 — child branches are contained by their actual owner lane.
+   The viewport is deliberately inserted by nested-branch-render.js immediately
+   around a child branch. This is the paint/scroll boundary, not the whole operation. */
+.lane-branch-lane > .lane-branch-child-viewport {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Node menus are position:fixed. Paint containment turns this viewport into
+     their containing/clipping boundary, so a nested DUMMY's ⋮ menu opens
+     invisibly inside the horizontal scroller. Do not contain this interactive
+     viewport; horizontal overflow remains owned here. */
+  contain: none;
+}
+
+/* The child may keep a readable intrinsic width, but only its viewport may scroll it. */
+.lane-branch-child-viewport > .lane-branch-nested {
+  display: inline-block;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  vertical-align: top;
+}
+
+/* The immediate lane is never a paint-through surface for child branch content. */
+.lane-branch-lane:has(> .lane-branch-child-viewport) {
+  overflow: hidden;
+}
+
+@media print {
+  .lane-branch-lane > .lane-branch-child-viewport {
+    overflow: visible !important;
+    contain: none;
+  }
+  .lane-branch-child-viewport > .lane-branch-nested {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+}
+
+.node-id-badge{display:inline-block;margin-left:5px;padding:1px 4px;border:1px solid #b9bbca;border-radius:8px;background:#fff;color:#6a6d7d;font:600 9px/1.2 monospace;vertical-align:middle}.lane-dummy-action-panel{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.lane-dummy-action{padding:4px 7px;border:1px solid #7477ad;border-radius:3px;background:#fff;color:#36398e;font-size:.76em;font-weight:600;cursor:pointer}.lane-dummy-action:hover{background:#eef0fb}
+
+/* Stage 6M: ⋮ is the standard action surface for node-based insertion. */
+.lane-dummy-actions{margin-top:7px;display:flex;justify-content:flex-end}.node-more{z-index:2}.lane-branch-lane .act-more-btn{min-width:25px;min-height:24px}

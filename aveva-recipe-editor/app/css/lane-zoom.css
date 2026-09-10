@@ -1,0 +1,9 @@
+/* Stage 6C.1 — independent visual zoom for procedure, operation and phase lanes. */
+.lane-header{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.lane-zoom{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+.lane-zoom button{height:22px;min-width:22px;padding:0 5px;border:1px solid rgba(255,255,255,.48);border-radius:3px;background:rgba(255,255,255,.12);color:#fff;font:600 12px/1 Arial,sans-serif;cursor:pointer}
+.lane-zoom button:hover:not(:disabled){background:rgba(255,255,255,.25)}
+.lane-zoom button:disabled{opacity:.45;cursor:default}
+.lane-zoom button[id^="laneZoomLabel_"]{min-width:39px;font-size:10px}
+.lane-body{overflow:auto;scrollbar-gutter:stable}
+@media print{.lane-zoom{display:none}.lane-body{zoom:1!important}}
