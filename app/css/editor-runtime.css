@@ -1,0 +1,2091 @@
+/**
+ * Consolidated stylesheet: editor-runtime.css
+ * Purpose: all application layout, editor, graph, responsive, zoom, and print styles.
+ * Original stylesheet order is retained below. The old per-feature CSS files have
+ * been removed from this delivery; future style changes belong in this file.
+ */
+
+/* ==========================================================================
+ * Former file: css/main.css
+ * ========================================================================== */
+
+/* AVEVA Batch Recipe Editor - Main Styles */
+/* Syngenta Brand: #36398E (purple), #009F3C (green), #2E7D32 (dark green) */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f5f6f8;
+  color: #333;
+  font-size: 14px;
+}
+.header {
+  background: #36398e;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.header .sub {
+  color: #c8c9e8;
+  font-size: 0.8em;
+}
+
+/* Toolbar */
+.toolbar {
+  background: #fff;
+  padding: 10px 24px;
+  border-bottom: 2px solid #009f3c;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.toolbar button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82em;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  transition: all 0.15s;
+}
+.toolbar button:hover {
+  background: #f0f7f2;
+}
+.toolbar button.primary {
+  background: #009f3c;
+  color: #fff;
+  border-color: #009f3c;
+}
+.toolbar button.primary:hover {
+  background: #008533;
+}
+.toolbar button.sec {
+  background: #36398e;
+  color: #fff;
+  border-color: #36398e;
+}
+.toolbar button.sec:hover {
+  background: #2d3078;
+}
+.toolbar button.active {
+  background: #009f3c;
+  color: #fff;
+  border-color: #009f3c;
+  box-shadow: 0 0 0 2px rgba(0, 159, 60, 0.3);
+}
+.toolbar .sep {
+  width: 1px;
+  height: 24px;
+  background: #ddd;
+  margin: 0 4px;
+}
+.toolbar input[type="number"] {
+  width: 80px;
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.82em;
+}
+
+.content {
+  padding: 16px 24px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #fff;
+}
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: #009f3c;
+  background: #f0f7f2;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h3 {
+  color: #36398e;
+  font-size: 0.95em;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.card h3 .caret {
+  font-size: 0.7em;
+  margin-right: 6px;
+  transition: transform 0.2s;
+}
+.card.collapsed .card-body {
+  display: none;
+}
+.card.collapsed h3 .caret {
+  transform: rotate(0deg);
+}
+.card:not(.collapsed) h3 .caret {
+  transform: rotate(90deg);
+}
+.card-body {
+  margin-top: 8px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+.card-item {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.card-item label {
+  color: #666;
+  font-size: 0.75em;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.card-item span {
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+/* Equipment chips */
+.eq-chip {
+  display: inline-block;
+  background: #f0f7f2;
+  border: 1px solid #009f3c;
+  padding: 3px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: #009f3c;
+}
+.eq-chip.transfer {
+  background: #f0f0fa;
+  border-color: #36398e;
+  color: #36398e;
+}
+
+/* Tables */
+table.dt {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83em;
+}
+table.dt th {
+  background: #36398e;
+  color: #fff;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 500;
+}
+table.dt td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+}
+table.dt tr:hover {
+  background: #f0f7f2;
+}
+table.dt tr.over-allocated {
+  background: #fff3f0;
+}
+table.dt tr.expandable {
+  cursor: pointer;
+}
+.mat-detail.hidden {
+  display: none;
+}
+.mat-total {
+  font-weight: 600;
+  color: #009f3c;
+}
+.mat-over {
+  color: #d32f2f;
+  font-weight: 600;
+}
+.expand-icon {
+  color: #36398e;
+  margin-right: 4px;
+  font-size: 0.9em;
+}
+
+.c-green {
+  color: #009f3c;
+}
+.c-blue {
+  color: #36398e;
+}
+.c-red {
+  color: #d32f2f;
+}
+.c-grey {
+  color: #777;
+}
+
+/* Sidebar drawer */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar.open {
+  right: 0;
+}
+.sidebar-hdr {
+  background: #36398e;
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar-hdr h3 {
+  font-size: 0.95em;
+}
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+.sidebar-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: none;
+}
+.sidebar-overlay.open {
+  display: block;
+}
+
+/* ==========================================================================
+ * Former file: css/editor.css
+ * ========================================================================== */
+
+/* AVEVA Batch Recipe Editor - Edit Mode Styles */
+
+/* Editable fields */
+.editable {
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s;
+}
+body.edit-mode .editable {
+  border-bottom-color: #009f3c40;
+}
+body.edit-mode .editable:hover {
+  background: #f0f7f2;
+  border-bottom-color: #009f3c;
+}
+.inline-edit {
+  border: 1px solid #009f3c;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: inherit;
+  font-family: inherit;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 159, 60, 0.2);
+}
+.inline-select {
+  border: 1px solid #009f3c;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  background: #fff;
+  outline: none;
+}
+
+/* Inline action controls (edit mode) */
+.act-bar {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+body.edit-mode .act-bar {
+  display: inline-flex;
+}
+.act-btn {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #666;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.7em;
+  line-height: 1.3;
+  transition: all 0.1s;
+}
+.act-btn:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+.act-btn.danger:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  border-color: #f8bbd0;
+}
+.act-more {
+  position: relative;
+  display: inline-block;
+}
+.act-more-btn {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #555;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.act-more-btn:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
+/* Dropdown menu */
+.dropdown {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 4px 0;
+  min-width: 180px;
+  z-index: 2147483000;
+  font-size: 0.84em;
+  display: none;
+  white-space: nowrap;
+}
+.dropdown.show {
+  display: block;
+}
+.dd-item {
+  padding: 7px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dd-item:hover {
+  background: #f0f7f2;
+}
+.dd-item.danger {
+  color: #d32f2f;
+}
+.dd-item.danger:hover {
+  background: #ffebee;
+}
+.dd-sep {
+  height: 1px;
+  background: #eee;
+  margin: 3px 0;
+}
+.dd-label {
+  padding: 4px 14px;
+  font-size: 0.75em;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Make UP/Op headers accommodate the action bar */
+body.edit-mode .pf-up-hdr {
+  padding-right: 8px;
+}
+body.edit-mode .pf-op-hdr {
+  padding-right: 6px;
+}
+body.edit-mode .pf-ph {
+  position: relative;
+}
+
+/* Edit mode indicators */
+body.edit-mode .pf-ph:hover {
+  outline: 1px dashed #009f3c80;
+}
+body.edit-mode .pf-op-hdr:hover {
+  outline: 1px dashed #009f3c40;
+}
+
+/* Material autocomplete */
+.mat-ac {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.mat-ac input {
+  width: 100%;
+  padding: 3px 6px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 0.85em;
+  background: #fff;
+}
+.mat-ac input:focus {
+  border-color: #009f3c;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 159, 60, 0.15);
+}
+.mat-ac-list {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 9999;
+  display: none;
+  font-size: 0.82em;
+  min-width: 350px;
+}
+.mat-ac-list.show {
+  display: block;
+}
+.mat-ac-item {
+  padding: 6px 10px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 60px 1fr 70px;
+  gap: 8px;
+  border-bottom: 1px solid #f5f5f5;
+  align-items: center;
+}
+.mat-ac-item:hover,
+.mat-ac-item.highlighted {
+  background: #f0f7f2;
+}
+.mat-ac-item .ac-id {
+  color: #666;
+  font-size: 0.9em;
+}
+.mat-ac-item .ac-name {
+  color: #333;
+  font-weight: 500;
+}
+.mat-ac-item .ac-code {
+  color: #36398e;
+  font-size: 0.9em;
+  text-align: right;
+}
+.mat-ac-item .ac-match {
+  background: #fff3cd;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.mat-ac-hdr {
+  padding: 4px 10px;
+  font-size: 0.72em;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: grid;
+  grid-template-columns: 60px 1fr 70px;
+  gap: 8px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+}
+.mat-ac-empty {
+  padding: 10px;
+  color: #999;
+  text-align: center;
+  font-size: 0.85em;
+}
+
+/* Phase picker */
+.phase-picker {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  min-width: 280px;
+  max-height: 400px;
+  z-index: 10000;
+  display: none;
+  overflow: hidden;
+}
+.phase-picker.show {
+  display: flex;
+  flex-direction: column;
+}
+.phase-picker-hdr {
+  background: #36398e;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.phase-picker-hdr button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.phase-picker-body {
+  overflow-y: auto;
+  max-height: 340px;
+  padding: 6px;
+}
+.phase-picker-item {
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.84em;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+.phase-picker-item:hover {
+  background: #f0f7f2;
+  border-color: #009f3c;
+}
+.phase-picker-item .pk-name {
+  font-weight: 500;
+  color: #333;
+}
+.phase-picker-item .pk-params {
+  color: #999;
+  font-size: 0.85em;
+  margin-top: 1px;
+}
+.phase-picker-item.xfer {
+  border-left: 3px solid #36398e;
+}
+.phase-picker-item.proc {
+  border-left: 3px solid #009f3c;
+}
+.phase-picker-sub {
+  padding: 3px 12px;
+  font-size: 0.72em;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Stage 4A: create a fully closed N-way branch before touching the graph. */
+.branch-create-anchor {
+  margin: 0 0 8px;
+  color: #2d3078;
+  font-weight: 600;
+}
+.branch-create-help {
+  margin: 0 0 14px;
+  color: #555;
+  font-size: 0.88em;
+  line-height: 1.4;
+}
+.branch-create-config {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: #f6f6fc;
+  border: 1px solid #dadaed;
+  border-radius: 5px;
+}
+.branch-create-config fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.86em;
+}
+.branch-create-config legend {
+  font-weight: 600;
+  color: #36398e;
+  margin-bottom: 4px;
+}
+.branch-create-count {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 0.86em;
+  color: #36398e;
+}
+.branch-create-count select,
+.branch-create-count input {
+  padding: 4px 6px;
+  border: 1px solid #bfc1d6;
+  border-radius: 3px;
+  background: #fff;
+  width: 72px;
+}
+.branch-create-lanes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+.branch-create-lane {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #d9d9e8;
+  border-left: 3px solid #36398e;
+  border-radius: 4px;
+  font-size: 0.82em;
+  color: #36398e;
+  font-weight: 600;
+}
+.branch-create-lane select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #c9c9d5;
+  border-radius: 3px;
+  background: #fff;
+  color: #333;
+  font-weight: 400;
+}
+.branch-create-error {
+  min-height: 1.2em;
+  margin-top: 10px;
+  color: #b3261e;
+  font-size: 0.84em;
+}
+.branch-create-cancel,
+.branch-create-confirm {
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+.branch-create-cancel {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #555;
+}
+.branch-create-confirm {
+  border: 1px solid #009f3c;
+  background: #009f3c;
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .branch-create-config {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .branch-create-lanes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+ * Former file: css/viewer.css
+ * ========================================================================== */
+
+/* AVEVA Batch Recipe Editor - Viewer Styles (List + Lane) */
+
+/* Unit Procedures */
+.pf-up {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.pf-up-hdr {
+  background: #36398e;
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px 6px 0 0;
+}
+.pf-up-hdr h4 {
+  color: #fff;
+  font-size: 0.95em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pf-up-hdr .tag {
+  background: #fff2;
+  color: #c8c9e8;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.75em;
+  border: 1px solid #fff3;
+}
+.pf-up-body {
+  padding: 14px;
+  display: none;
+}
+.pf-up.open .pf-up-body {
+  display: block;
+}
+.pf-up-hdr .caret {
+  color: #fff;
+  font-size: 0.7em;
+  transition: transform 0.2s;
+}
+.pf-up.open .pf-up-hdr .caret {
+  transform: rotate(90deg);
+}
+
+.pf-op {
+  margin-left: 16px;
+  padding: 0 0 8px 14px;
+  border-left: 3px solid #009f3c;
+  margin-bottom: 6px;
+}
+.pf-op-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 8px;
+  background: #f1f8e9;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.pf-op-hdr .caret {
+  color: #2e7d32;
+  font-size: 0.65em;
+  margin-right: 5px;
+  transition: transform 0.2s;
+}
+.pf-op.open .pf-op-hdr .caret {
+  transform: rotate(90deg);
+}
+.pf-op-title {
+  color: #36398e;
+  font-size: 0.88em;
+  font-weight: 600;
+}
+.pf-op-body {
+  display: none;
+}
+.pf-op.open .pf-op-body {
+  display: block;
+}
+
+.pf-ph {
+  margin-left: 16px;
+  padding: 7px 10px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-left: 3px solid #009f3c;
+}
+.pf-ph.xfer {
+  border-left-color: #36398e;
+  background: #f5f5fc;
+}
+.pf-ph.alloc {
+  border-left-color: #999;
+  background: #fafafa;
+  opacity: 0.75;
+}
+.pf-ph-name {
+  font-weight: 500;
+  font-size: 0.88em;
+  color: #333;
+}
+.pf-ph-desc {
+  color: #666;
+  font-size: 0.8em;
+  font-style: italic;
+  margin-top: 2px;
+}
+.pf-ph-parent {
+  color: #36398e;
+  font-size: 0.75em;
+}
+.pf-ph-params {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 3px;
+  margin-top: 5px;
+}
+.pf-param {
+  background: #fff;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-size: 0.78em;
+  border: 1px solid #eee;
+}
+.pf-param .pn {
+  color: #666;
+}
+.pf-param .pv {
+  color: #009f3c;
+  font-weight: 600;
+}
+.pf-param .pm {
+  color: #36398e;
+  font-weight: 500;
+}
+
+.seq-arrow {
+  text-align: center;
+  color: #ccc;
+  font-size: 1em;
+  padding: 2px 0;
+}
+.badge {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.68em;
+  margin-left: 6px;
+  font-weight: 500;
+}
+.b-proc {
+  background: #e8f5e9;
+  color: #009f3c;
+}
+.b-xfer {
+  background: #e8eaf6;
+  color: #36398e;
+}
+.b-alloc {
+  background: #f5f5f5;
+  color: #777;
+}
+
+.parallel-box {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 6px 16px;
+  border: 1px dashed #009f3c80;
+  border-radius: 4px;
+  padding: 10px;
+  background: #f0f7f2;
+}
+.parallel-box .branch {
+  flex: 1;
+  min-width: 0;
+}
+.parallel-box .branch:not(:last-child) {
+  border-right: 1px dashed #009f3c60;
+  padding-right: 8px;
+}
+.parallel-box .branch-label {
+  color: #009f3c;
+  font-size: 0.72em;
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.flow-ann {
+  padding: 5px 12px;
+  margin: 5px 0 5px 16px;
+  border-radius: 4px;
+  font-size: 0.78em;
+  font-weight: 500;
+}
+.flow-ann.trans {
+  background: #fff8e1;
+  color: #f57c00;
+  border: 1px dashed #ffb30080;
+}
+.flow-ann.loop {
+  background: #fce4ec;
+  color: #c62828;
+  border: 1px dashed #ef535080;
+}
+
+/* Lane View */
+.lane-container {
+  display: flex;
+  gap: 8px;
+  height: calc(100vh - 200px);
+  min-height: 500px;
+}
+.lane {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.lane.lane-wide {
+  flex: 2.5;
+}
+.lane-header {
+  background: #36398e;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.lane-body {
+  overflow-y: auto;
+  padding: 6px;
+  flex: 1;
+}
+.lane-item {
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #eee;
+  font-size: 0.84em;
+  transition: all 0.15s;
+}
+.lane-item:hover {
+  background: #f0f7f2;
+  border-color: #009f3c;
+}
+.lane-item.selected {
+  background: #e8f5e9;
+  border-color: #009f3c;
+  border-left: 3px solid #009f3c;
+  font-weight: 600;
+}
+.lane-item .li-num {
+  color: #999;
+  font-size: 0.8em;
+  margin-right: 4px;
+}
+.lane-item .li-name {
+  color: #333;
+}
+.lane-item .li-tag {
+  color: #36398e;
+  font-size: 0.72em;
+  display: block;
+  margin-top: 2px;
+}
+.lane-item .li-meta {
+  color: #999;
+  font-size: 0.7em;
+  float: right;
+}
+.lane-arrow {
+  text-align: center;
+  color: #ccc;
+  font-size: 0.8em;
+  padding: 1px 0;
+}
+.lane-ph {
+  padding: 6px 8px;
+  margin-bottom: 3px;
+  border-radius: 4px;
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-left: 3px solid #009f3c;
+  font-size: 0.82em;
+}
+.lane-ph.xfer {
+  border-left-color: #36398e;
+  background: #f5f5fc;
+}
+.lane-ph.alloc {
+  border-left-color: #d07a00;
+  background: #fff8e8;
+  opacity: 1;
+}
+.lane-ph .lph-name {
+  font-weight: 500;
+  color: #333;
+}
+.lane-ph .lph-badge {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.7em;
+  margin-left: 4px;
+  font-weight: 500;
+}
+.lane-ph .lph-desc {
+  color: #666;
+  font-size: 0.85em;
+  font-style: italic;
+  margin-top: 2px;
+}
+.lane-ph .lph-parent {
+  color: #36398e;
+  font-size: 0.78em;
+}
+.lane-ph .lph-params {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2px;
+  margin-top: 4px;
+}
+.lane-ph .lph-param {
+  background: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.82em;
+  border: 1px solid #eee;
+}
+.lane-ph .lph-param .pn {
+  color: #666;
+}
+.lane-ph .lph-param .pv {
+  color: #009f3c;
+  font-weight: 600;
+}
+.lane-ph .lph-param .pm {
+  color: #36398e;
+  font-weight: 500;
+}
+.lane-branch {
+  margin: 4px 0;
+  border: 1px dashed #009f3c80;
+  border-radius: 4px;
+  padding: 6px;
+  background: #f0f7f2;
+}
+.lane-branch-hdr {
+  color: #009f3c;
+  font-size: 0.72em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.lane-branch-lanes {
+  display: flex;
+  gap: 6px;
+}
+.lane-branch-lane {
+  flex: 1;
+  min-width: 0;
+}
+.lane-branch-lane:not(:last-child) {
+  border-right: 1px dashed #009f3c60;
+  padding-right: 6px;
+}
+.lane-branch-label {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  box-sizing: border-box;
+  margin: 0 0 7px;
+  padding: 5px 7px 5px 10px;
+  background: #36398e;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 0.78em;
+  font-weight: 700;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+}
+.lane-branch-label .act-bar {
+  margin-left: auto;
+}
+.lane-branch-label .act-more-btn {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+.lane-branch-label .act-more-btn:hover {
+  background: #fff;
+  color: #36398e;
+}
+.lane-trans {
+  padding: 4px 8px;
+  margin: 3px 0;
+  border-radius: 4px;
+  font-size: 0.78em;
+  font-weight: 500;
+}
+.lane-trans.loop {
+  background: #fce4ec;
+  color: #c62828;
+  border: 1px dashed #ef535080;
+}
+.lane-trans.cond {
+  background: #fff8e1;
+  color: #f57c00;
+  border: 1px dashed #ffb30080;
+}
+
+/* Rich parameter cards: shared by view and edit mode. */
+.lane-ph .lph-param {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 5px 6px;
+}
+.lane-ph .lph-param-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+.lane-ph .lph-param .pn {
+  font-weight: 600;
+  color: #444;
+  overflow-wrap: anywhere;
+}
+.lane-ph .lph-param-meta {
+  font-size: 0.76em;
+  color: #888;
+  overflow-wrap: anywhere;
+}
+.lane-ph .lph-material {
+  color: #36398e;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.lane-ph .lph-value {
+  color: #009f3c;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.lane-ph .lph-field-label {
+  font-size: 0.72em;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.lane-ph .mat-ac,
+.lane-ph .lph-value-input {
+  width: 100%;
+}
+.lane-ph .mat-ac input,
+.lane-ph .lph-value-input {
+  width: 100%;
+  font: inherit;
+  padding: 3px 5px;
+  border: 1px solid #cfd2d8;
+  border-radius: 3px;
+  background: #fff;
+}
+
+/* Dynamic branch rail styling */
+.lane-branch {
+  position: relative;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.lane-branch-parallel::before,
+.lane-branch-parallel::after,
+.lane-branch-serial::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  border-top: 1px solid #009f3c;
+}
+.lane-branch-parallel::before {
+  top: 4px;
+}
+.lane-branch-parallel::after {
+  top: 7px;
+}
+.lane-branch-serial::before {
+  top: 5px;
+}
+.lane-branch-lanes {
+  align-items: stretch;
+  overflow-x: auto;
+}
+.lane-branch-lane {
+  min-width: 180px;
+}
+
+.dynamic-branch-box {
+  display: flex;
+  overflow-x: auto;
+}
+.dynamic-branch-box .branch {
+  min-width: 260px;
+  flex: 1;
+}
+
+/* Read-only visual boundaries for AVEVA Begin/End ProcedureLogic nodes. */
+.lane-boundary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  margin: 4px 0;
+  border-radius: 4px;
+  font-size: 0.82em;
+  font-weight: 600;
+}
+.lane-boundary-mark {
+  font-size: 0.72em;
+  width: 12px;
+  text-align: center;
+}
+.lane-boundary-start {
+  background: #eef0fb;
+  border: 1px solid #c8cbea;
+  border-left: 3px solid #36398e;
+  color: #2d3078;
+}
+.lane-boundary-end {
+  background: #f4f4f4;
+  border: 1px solid #d7d7d7;
+  border-left: 3px solid #777;
+  color: #555;
+}
+
+/* Stage 3A: closed parallel-branch display only. These rules intentionally
+   provide clear fork/join states without adding branch-edit controls. */
+.lane-readonly-tag {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: #fff3cd;
+  color: #755b00;
+  font-size: 0.7em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lane-branch-readonly {
+  margin: 7px 0;
+  border: 1px solid #6d70b8;
+  border-radius: 6px;
+  padding: 0;
+  background: #f6f6fc;
+  overflow: hidden;
+}
+.lane-branch-readonly .lane-branch-lanes {
+  padding: 8px;
+  gap: 8px;
+  background: #fff;
+}
+.lane-branch-readonly .lane-branch-lane {
+  padding: 0 7px 4px;
+}
+.lane-branch-readonly .lane-branch-lane:not(:last-child) {
+  border-right: 1px dashed #a9abd0;
+}
+.lane-branch-fork,
+.lane-branch-join {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  font-size: 0.78em;
+  color: #2d3078;
+  background: #eef0fb;
+}
+.lane-branch-fork {
+  border-bottom: 1px solid #c8cbea;
+}
+.lane-branch-join {
+  border-top: 1px solid #c8cbea;
+  background: #edf7f0;
+  color: #176b3b;
+}
+.lane-branch-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #36398e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05em;
+}
+.lane-branch-join .lane-branch-symbol {
+  background: #009f3c;
+}
+.lane-branch-continues {
+  margin-left: auto;
+  color: #35535f;
+  font-weight: 400;
+  text-align: right;
+}
+.lane-branch-readonly-note {
+  padding: 5px 9px;
+  border-top: 1px solid #e1e1ee;
+  background: #fafafa;
+  color: #777;
+  font-size: 0.72em;
+  font-style: italic;
+}
+
+/* Stage 3A.1: N-way AVEVA branch display. Parallel = execute All in lanes;
+   Serial = execute Single as vertically listed alternatives. */
+.lane-branch-mode {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 9px;
+  background: #fff;
+  color: #2d3078;
+  font-size: 0.9em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.lane-branch-single {
+  border-color: #b17a1d;
+  background: #fffaf1;
+}
+.lane-branch-single .lane-branch-fork {
+  background: #fff3dc;
+  color: #76500d;
+  border-bottom-color: #e2c58d;
+}
+.lane-branch-single .lane-branch-symbol {
+  background: #b17a1d;
+}
+.lane-branch-single .lane-branch-join {
+  background: #fff8e9;
+  color: #76500d;
+  border-top-color: #e2c58d;
+}
+.lane-branch-single .lane-branch-join .lane-branch-symbol {
+  background: #b17a1d;
+}
+.lane-branch-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: #fff;
+}
+.lane-branch-option {
+  border: 1px solid #ead6ad;
+  border-left: 3px solid #b17a1d;
+  border-radius: 4px;
+  padding: 6px;
+  background: #fffdf8;
+}
+.lane-branch-option .lane-branch-label {
+  color: #76500d;
+}
+
+/* Stage 4B: explicit AVEVA Other:DUMMY blank branch slots. */
+.lane-dummy {
+  position: relative;
+  min-height: 80px;
+  margin: 3px 0;
+  padding: 10px;
+  border: 1px dashed #8b8dbb;
+  border-radius: 5px;
+  background: #fafaff;
+  color: #575a8d;
+  font-size: 0.8em;
+}
+.lane-dummy-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.lane-dummy-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #e7e8f8;
+  color: #36398e;
+  font-size: 1.1em;
+}
+.lane-dummy-help {
+  margin: 5px 0 0;
+  color: #777;
+  font-size: 0.9em;
+  font-style: italic;
+}
+.lane-dummy-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+.lane-branch-single .lane-branch-lanes {
+  padding: 8px;
+  gap: 8px;
+  background: #fff;
+}
+.lane-branch-single .lane-branch-lane {
+  padding: 0 7px 4px;
+  min-width: 180px;
+}
+.lane-branch-single .lane-branch-lane:not(:last-child) {
+  border-right: 1px dashed #dfbf82;
+}
+
+/* Stage 4C: explicit, confirmed removal of a complete supported branch. */
+.lane-branch-remove {
+  margin-left: 4px;
+  padding: 3px 7px;
+  border: 1px solid #bc4b4b;
+  border-radius: 3px;
+  background: #fff;
+  color: #9d2f2f;
+  font-size: 0.78em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.lane-branch-remove:hover {
+  background: #fff0f0;
+}
+
+/* Stage 6B.1: recursively nested branch blocks. */
+.lane-branch-nested {
+  margin: 8px 0;
+}
+.lane-branch-nested[data-nested-depth="1"] {
+  border-color: #8a63a8;
+  background: #faf6fc;
+}
+.lane-branch-nested[data-nested-depth="1"] > .lane-branch-fork {
+  background: #f1e8f6;
+  color: #633b7c;
+}
+.lane-branch-nested[data-nested-depth="2"] {
+  border-color: #b17a1d;
+  background: #fffaf1;
+}
+.lane-branch-nested[data-nested-depth="2"] > .lane-branch-fork {
+  background: #fff3dc;
+  color: #76500d;
+}
+.lane-branch-nested .lane-branch-nested {
+  min-width: 360px;
+}
+.nested-operation-graph > .lane-branch-nested {
+  margin-top: 6px;
+}
+
+.lane-transition-node {
+  border-color: #8b8dbb;
+  background: #f7f7ff;
+  margin: 5px 0;
+}
+.lane-transition-node .lph-name {
+  color: #36398e;
+}
+
+/* Stage 8A — graph relocation affordances. Drop boundaries are deliberately
+   compact until a Phase is dragged over them, so normal recipe viewing is not
+   visually re-ordered or obscured. */
+.graph-drag-handle {
+  display: inline-block;
+  margin-right: 6px;
+  color: #6b6f7a;
+  cursor: grab;
+  font-size: 1.1em;
+  line-height: 1;
+  user-select: none;
+}
+.graph-drag-handle:active {
+  cursor: grabbing;
+}
+.graph-move-card.graph-dragging {
+  opacity: 0.45;
+}
+.graph-drop-boundary {
+  height: 6px;
+  margin: 1px 0;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+  color: transparent;
+  font-size: 0.72em;
+  line-height: 16px;
+  text-align: center;
+  transition:
+    height 0.12s,
+    border-color 0.12s,
+    background 0.12s,
+    color 0.12s;
+}
+body.graph-move-dragging .graph-drop-boundary {
+  height: 18px;
+  border-color: #aeb4e5;
+  background: #fafaff;
+  color: #5c62a8;
+}
+body.graph-move-dragging .graph-drop-boundary:hover,
+.graph-drop-boundary.graph-drop-active {
+  height: 18px;
+  border-color: #36398e;
+  background: #eef0ff;
+  color: #36398e;
+}
+.lane-branch-lane > .graph-drop-boundary:first-child {
+  margin-top: 3px;
+}
+
+/* Consolidated structural drop targets — hidden until a Phase drag starts. */
+.graph-drop-boundary,
+.v124-transition-fork-drop,
+.v126-postjoin-drop,
+.v128-lane-join-drop {
+  display: none !important;
+}
+body.graph-move-dragging .graph-drop-boundary {
+  display: block !important;
+  height: 30px;
+  min-height: 30px;
+  box-sizing: border-box;
+  margin: 6px 0;
+  padding: 6px 10px;
+  border: 2px dashed #aeb4e5 !important;
+  border-radius: 5px;
+  background: #fafaff;
+  color: #5c62a8;
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 16px;
+}
+body.graph-move-dragging .graph-drop-boundary span {
+  font-weight: 400;
+  margin-left: 8px;
+}
+body.graph-move-dragging .v124-transition-fork-drop {
+  border-color: #8b8dbb !important;
+  color: #36398e;
+  background: #f7f7ff;
+}
+body.graph-move-dragging .v126-postjoin-drop {
+  border-color: #63a879 !important;
+  color: #287248;
+  background: #f0fbf3;
+}
+body.graph-move-dragging .v128-lane-join-drop {
+  border-color: #d3a246 !important;
+  color: #855900;
+  background: #fff8e7;
+}
+body.graph-move-dragging .graph-drop-boundary.graph-drop-active {
+  border-color: #009f3c !important;
+  background: #eaf8ee !important;
+  color: #006d2a !important;
+}
+
+/* V12.10a compact card headers; no graph or movement styling changes. */
+.v1210a-card-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+.v1210a-title {
+  min-width: 0;
+}
+.v1210a-actions {
+  margin-left: auto;
+}
+.v1210a-meta,
+.v1210a-transition-meta {
+  display: none;
+  margin: 5px 0 0 27px;
+}
+.v1210a-meta.is-open,
+.v1210a-transition-meta.is-open {
+  display: block;
+}
+
+/* Operation drag state is isolated from Phase movement. */
+.operation-drop-target {
+  display: none !important;
+}
+body.operation-move-dragging .operation-drop-target {
+  display: block !important;
+  height: 30px;
+  min-height: 30px;
+  box-sizing: border-box;
+  margin: 6px 0;
+  padding: 6px 10px;
+  border: 2px dashed #aeb4e5 !important;
+  border-radius: 5px;
+  background: #fafaff;
+  color: #5c62a8;
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 16px;
+}
+body.operation-move-dragging .operation-drop-target.graph-drop-active {
+  border-color: #009f3c !important;
+  background: #eaf8ee !important;
+  color: #006d2a !important;
+}
+
+/* Empty Operation uses the shared DUMMY-card language. */
+.empty-operation-dummy {
+  margin: 12px 8px;
+}
+.empty-operation-dummy .lane-dummy-actions {
+  justify-content: flex-end;
+}
+
+/* Step 9: Operation-scope branch viewport mirrors Phase branch scrolling. */
+.lane-branch-operation {
+  max-width: 100%;
+  overflow: hidden;
+}
+.lane-branch-operation .lane-branch-lanes {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  padding: 4px;
+}
+.lane-branch-operation .lane-branch-lane {
+  min-width: 260px;
+  flex: 1 0 260px;
+}
+.operation-transition-drag-handle {
+  display: inline-block;
+  margin-right: 6px;
+  color: #6b6f7a;
+  cursor: grab;
+  font-size: 1.1em;
+  user-select: none;
+}
+.operation-transition-drag-handle:active {
+  cursor: grabbing;
+}
+.operation-transition-card.graph-dragging {
+  opacity: 0.45;
+}
+
+.operation-transition-drop-target {
+  display: none !important;
+}
+body.operation-transition-move-dragging .operation-transition-drop-target {
+  display: block !important;
+  height: 28px;
+  box-sizing: border-box;
+  margin: 4px 0;
+  padding: 5px 9px;
+  border: 2px dashed #aeb4e5 !important;
+  border-radius: 5px;
+  background: #fafaff;
+  color: #5c62a8;
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: 600;
+}
+.operation-transition-drop-target.graph-drop-active {
+  border-color: #009f3c !important;
+  background: #eaf8ee !important;
+  color: #006d2a !important;
+}
+
+/* ==========================================================================
+ * Former file: css/nested-responsive.css
+ * ========================================================================== */
+
+/* Stage 6B.2 — responsive nested branch lanes.
+   Each branch owns its overflow, preventing wide nesting from widening the page. */
+.nested-operation-graph,
+.lane-branch,
+.lane-branch-lane {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.lane-branch > .lane-branch-lanes {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lane-branch > .lane-branch-lanes > .lane-branch-lane {
+  flex: 1 0 260px;
+  min-width: 260px;
+  /* A lane must not inherit a child's intrinsic width. Its child viewport owns overflow. */
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Content may expand a lane while sibling lanes remain readable. */
+.lane-branch-lane .lane-ph,
+.lane-branch-lane .lane-dummy {
+  min-width: 240px;
+  max-width: none;
+  overflow-wrap: anywhere;
+}
+
+.lane-branch-lane .lph-name,
+.lane-branch-lane .lph-parent,
+.lane-branch-lane .lph-param,
+.lane-branch-lane .lph-value,
+.lane-branch-lane .lph-material {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* A nested block grows naturally inside its parent lane, then scrolls locally. */
+.lane-branch-nested {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+}
+
+.lane-branch-nested > .lane-branch-lanes {
+  min-width: 0;
+}
+
+.lane-branch-fork,
+.lane-branch-join {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .lane-branch > .lane-branch-lanes > .lane-branch-lane {
+    flex-basis: 220px;
+    min-width: 220px;
+  }
+  .lane-branch-lane .lane-ph,
+  .lane-branch-lane .lane-dummy {
+    min-width: 200px;
+  }
+}
+
+@media print {
+  .lane-branch > .lane-branch-lanes {
+    overflow: visible !important;
+    width: auto !important;
+    max-width: none !important;
+    scrollbar-gutter: auto;
+  }
+  .lane-branch-nested {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+  .lane-branch > .lane-branch-lanes > .lane-branch-lane {
+    min-width: 0 !important;
+    width: auto !important;
+  }
+}
+/* Stage 6B.4 — child branches are contained by their actual owner lane.
+   The viewport is deliberately inserted by nested-branch-render.js immediately
+   around a child branch. This is the paint/scroll boundary, not the whole operation. */
+.lane-branch-lane > .lane-branch-child-viewport {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Node menus are position:fixed. Paint containment turns this viewport into
+     their containing/clipping boundary, so a nested DUMMY's ⋮ menu opens
+     invisibly inside the horizontal scroller. Do not contain this interactive
+     viewport; horizontal overflow remains owned here. */
+  contain: none;
+}
+
+/* The child may keep a readable intrinsic width, but only its viewport may scroll it. */
+.lane-branch-child-viewport > .lane-branch-nested {
+  display: inline-block;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  vertical-align: top;
+}
+
+/* The immediate lane is never a paint-through surface for child branch content. */
+.lane-branch-lane:has(> .lane-branch-child-viewport) {
+  overflow: hidden;
+}
+
+@media print {
+  .lane-branch-lane > .lane-branch-child-viewport {
+    overflow: visible !important;
+    contain: none;
+  }
+  .lane-branch-child-viewport > .lane-branch-nested {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+}
+
+.node-id-badge {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 1px 4px;
+  border: 1px solid #b9bbca;
+  border-radius: 8px;
+  background: #fff;
+  color: #6a6d7d;
+  font: 600 9px/1.2 monospace;
+  vertical-align: middle;
+}
+.lane-dummy-action-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.lane-dummy-action {
+  padding: 4px 7px;
+  border: 1px solid #7477ad;
+  border-radius: 3px;
+  background: #fff;
+  color: #36398e;
+  font-size: 0.76em;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lane-dummy-action:hover {
+  background: #eef0fb;
+}
+
+/* Stage 6M: ⋮ is the standard action surface for node-based insertion. */
+.lane-dummy-actions {
+  margin-top: 7px;
+  display: flex;
+  justify-content: flex-end;
+}
+.node-more {
+  z-index: 2;
+}
+.lane-branch-lane .act-more-btn {
+  min-width: 25px;
+  min-height: 24px;
+}
+
+/* ==========================================================================
+ * Former file: css/lane-zoom.css
+ * ========================================================================== */
+
+/* Stage 6C.1 — independent visual zoom for procedure, operation and phase lanes. */
+.lane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.lane-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+.lane-zoom button {
+  height: 22px;
+  min-width: 22px;
+  padding: 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font:
+    600 12px/1 Arial,
+    sans-serif;
+  cursor: pointer;
+}
+.lane-zoom button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+}
+.lane-zoom button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.lane-zoom button[id^="laneZoomLabel_"] {
+  min-width: 39px;
+  font-size: 10px;
+}
+.lane-body {
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+@media print {
+  .lane-zoom {
+    display: none;
+  }
+  .lane-body {
+    zoom: 1 !important;
+  }
+}
+
+/* ==========================================================================
+ * Former file: css/print.css
+ * ========================================================================== */
+
+/* AVEVA Batch Recipe Editor - Print Styles */
+
+@media print {
+  .toolbar,
+  .drop-zone,
+  .sidebar,
+  .sidebar-overlay,
+  .act-bar,
+  .act-more,
+  .act-btn {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    font-size: 11px;
+  }
+  .content {
+    padding: 0;
+    max-width: 100%;
+  }
+  .pf-up {
+    break-inside: avoid;
+    box-shadow: none;
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+  }
+  .pf-op {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .pf-ph {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .parallel-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .pf-up-hdr {
+    background: #36398e !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pf-op-hdr {
+    background: #f1f8e9 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  table.dt th {
+    background: #36398e !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .badge {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .flow-ann {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .parallel-box {
+    border: 1px solid #009f3c;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: #f0f7f2 !important;
+  }
+  .lane-container {
+    height: auto !important;
+    min-height: 0;
+  }
+  .lane {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .lane-body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .lane-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: #36398e !important;
+  }
+  .lane-ph {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .lane-trans {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pf-up-body {
+    display: block !important;
+  }
+  .pf-op-body {
+    display: block !important;
+  }
+}
