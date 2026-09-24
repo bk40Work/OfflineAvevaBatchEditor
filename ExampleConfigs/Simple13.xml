@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BatchInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.wbf.org/xml/B2MML-V0401">
+  <MasterRecipe>
+    <ID>Simple13</ID>
+    <Description />
+    <Header>
+      <ModificationLog>
+        <ModifiedDate>2026-08-31T14:12:22</ModifiedDate>
+        <Description>Deleted a nested branch but had to also delete the nested items that were not on the branch I had highlighted</Description>
+        <Author>KB</Author>
+        <VersionState xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Production</VersionState>
+        <VersionType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Production</VersionType>
+      </ModificationLog>
+      <ApprovalHistory>
+        <IndividualApproval />
+        <IndividualApproval />
+        <IndividualApproval />
+        <IndividualApproval />
+        <IndividualApproval />
+      </ApprovalHistory>
+      <ProductID>sdf</ProductID>
+      <ProductName>fd</ProductName>
+      <BatchSize>
+        <Nominal>0</Nominal>
+        <Min>0</Min>
+        <Max>0</Max>
+      </BatchSize>
+      <ApprovedForProduction xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">false</ApprovedForProduction>
+      <ApprovedForTest xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">false</ApprovedForTest>
+    </Header>
+    <EquipmentRequirement>
+      <ID>sFormulation</ID>
+      <ProcessInstance xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+        <Name>sFormulation</Name>
+        <Unit />
+        <UnitSelectionMode>Auto</UnitSelectionMode>
+      </ProcessInstance>
+    </EquipmentRequirement>
+    <Formula>
+      <Parameter>
+        <ID>1</ID>
+        <ParameterType>ProcessParameter</ParameterType>
+        <Value>
+          <ValueString>0.0</ValueString>
+          <DataInterpretation>Constant</DataInterpretation>
+          <DataType>double</DataType>
+          <UnitOfMeasure>rpm</UnitOfMeasure>
+        </Value>
+        <Name xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMax</Name>
+        <ToleranceType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">General</ToleranceType>
+        <HighDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</HighDeviation>
+        <LowDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</LowDeviation>
+        <ProcessVariableType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Process</ProcessVariableType>
+        <Label xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">1</Label>
+        <ParentInstance xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">sFormulation</ParentInstance>
+        <Phase xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">mixerOn</Phase>
+        <PhaseParameter xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMax</PhaseParameter>
+      </Parameter>
+      <Parameter>
+        <ID>2</ID>
+        <ParameterType>ProcessParameter</ParameterType>
+        <Value>
+          <ValueString>0.0</ValueString>
+          <DataInterpretation>Constant</DataInterpretation>
+          <DataType>double</DataType>
+          <UnitOfMeasure>rpm</UnitOfMeasure>
+        </Value>
+        <Name xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMax</Name>
+        <ToleranceType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">General</ToleranceType>
+        <HighDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</HighDeviation>
+        <LowDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</LowDeviation>
+        <ProcessVariableType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Process</ProcessVariableType>
+        <Label xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">3</Label>
+        <ParentInstance xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">sFormulation</ParentInstance>
+        <Phase xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">mixerOn</Phase>
+        <PhaseParameter xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMax</PhaseParameter>
+      </Parameter>
+      <Parameter>
+        <ID>3</ID>
+        <ParameterType>ProcessParameter</ParameterType>
+        <Value>
+          <ValueString>0.0</ValueString>
+          <DataInterpretation>Constant</DataInterpretation>
+          <DataType>double</DataType>
+          <UnitOfMeasure>rpm</UnitOfMeasure>
+        </Value>
+        <Name xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMin</Name>
+        <ToleranceType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">General</ToleranceType>
+        <HighDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</HighDeviation>
+        <LowDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</LowDeviation>
+        <ProcessVariableType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Process</ProcessVariableType>
+        <Label xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">1</Label>
+        <ParentInstance xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">sFormulation</ParentInstance>
+        <Phase xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">mixerOn</Phase>
+        <PhaseParameter xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMin</PhaseParameter>
+      </Parameter>
+      <Parameter>
+        <ID>4</ID>
+        <ParameterType>ProcessParameter</ParameterType>
+        <Value>
+          <ValueString>0.0</ValueString>
+          <DataInterpretation>Constant</DataInterpretation>
+          <DataType>double</DataType>
+          <UnitOfMeasure>rpm</UnitOfMeasure>
+        </Value>
+        <Name xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMin</Name>
+        <ToleranceType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">General</ToleranceType>
+        <HighDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</HighDeviation>
+        <LowDeviation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">0</LowDeviation>
+        <ProcessVariableType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Process</ProcessVariableType>
+        <Label xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">3</Label>
+        <ParentInstance xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">sFormulation</ParentInstance>
+        <Phase xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">mixerOn</Phase>
+        <PhaseParameter xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">setpointLevelMin</PhaseParameter>
+      </Parameter>
+    </Formula>
+    <ProcedureLogic>
+      <Link>
+        <ID>7</ID>
+        <FromID>
+          <FromIDValue>6</FromIDValue>
+          <FromType>Step</FromType>
+          <IDScope>Internal</IDScope>
+        </FromID>
+        <ToID>
+          <ToIDValue>30</ToIDValue>
+          <ToType>Step</ToType>
+          <IDScope>Internal</IDScope>
+        </ToID>
+        <LinkType>ControlLink</LinkType>
+        <Depiction>Line</Depiction>
+      </Link>
+      <Link>
+        <ID>31</ID>
+        <FromID>
+          <FromIDValue>30</FromIDValue>
+          <FromType>Step</FromType>
+          <IDScope>Internal</IDScope>
+        </FromID>
+        <ToID>
+          <ToIDValue>33</ToIDValue>
+          <ToType>Step</ToType>
+          <IDScope>Internal</IDScope>
+        </ToID>
+        <LinkType>ControlLink</LinkType>
+        <Depiction>Line</Depiction>
+      </Link>
+      <Step>
+        <ID>6</ID>
+        <RecipeElementID>5</RecipeElementID>
+        <RecipeElementVersion>0</RecipeElementVersion>
+      </Step>
+      <Step>
+        <ID>30</ID>
+        <RecipeElementID>8</RecipeElementID>
+        <RecipeElementVersion>0</RecipeElementVersion>
+      </Step>
+      <Step>
+        <ID>33</ID>
+        <RecipeElementID>32</RecipeElementID>
+        <RecipeElementVersion>0</RecipeElementVersion>
+      </Step>
+    </ProcedureLogic>
+    <RecipeElement>
+      <ID>5</ID>
+      <RecipeElementType>Begin</RecipeElementType>
+    </RecipeElement>
+    <RecipeElement>
+      <ID>8</ID>
+      <RecipeElementType>UnitProcedure</RecipeElementType>
+      <ProcedureLogic>
+        <Link>
+          <ID>11</ID>
+          <FromID>
+            <FromIDValue>10</FromIDValue>
+            <FromType>Step</FromType>
+            <IDScope>Internal</IDScope>
+          </FromID>
+          <ToID>
+            <ToIDValue>26</ToIDValue>
+            <ToType>Step</ToType>
+            <IDScope>Internal</IDScope>
+          </ToID>
+          <LinkType>ControlLink</LinkType>
+          <Depiction>Line</Depiction>
+        </Link>
+        <Link>
+          <ID>27</ID>
+          <FromID>
+            <FromIDValue>26</FromIDValue>
+            <FromType>Step</FromType>
+            <IDScope>Internal</IDScope>
+          </FromID>
+          <ToID>
+            <ToIDValue>29</ToIDValue>
+            <ToType>Step</ToType>
+            <IDScope>Internal</IDScope>
+          </ToID>
+          <LinkType>ControlLink</LinkType>
+          <Depiction>Line</Depiction>
+        </Link>
+        <Step>
+          <ID>10</ID>
+          <RecipeElementID>9</RecipeElementID>
+          <RecipeElementVersion>0</RecipeElementVersion>
+        </Step>
+        <Step>
+          <ID>26</ID>
+          <RecipeElementID>12</RecipeElementID>
+          <RecipeElementVersion>0</RecipeElementVersion>
+        </Step>
+        <Step>
+          <ID>29</ID>
+          <RecipeElementID>28</RecipeElementID>
+          <RecipeElementVersion>0</RecipeElementVersion>
+        </Step>
+      </ProcedureLogic>
+      <RecipeElement>
+        <ID>9</ID>
+        <RecipeElementType>Begin</RecipeElementType>
+      </RecipeElement>
+      <RecipeElement>
+        <ID>12</ID>
+        <RecipeElementType>Operation</RecipeElementType>
+        <ProcedureLogic>
+          <Link>
+            <ID>15</ID>
+            <FromID>
+              <FromIDValue>14</FromIDValue>
+              <FromType>Step</FromType>
+              <IDScope>Internal</IDScope>
+            </FromID>
+            <ToID>
+              <ToIDValue>17</ToIDValue>
+              <ToType>Step</ToType>
+              <IDScope>Internal</IDScope>
+            </ToID>
+            <LinkType>ControlLink</LinkType>
+            <Depiction>Line</Depiction>
+          </Link>
+          <Link>
+            <ID>18</ID>
+            <FromID>
+              <FromIDValue>17</FromIDValue>
+              <FromType>Step</FromType>
+              <IDScope>Internal</IDScope>
+            </FromID>
+            <ToID>
+              <ToIDValue>21</ToIDValue>
+              <ToType>Step</ToType>
+              <IDScope>Internal</IDScope>
+            </ToID>
+            <ToID>
+              <ToIDValue>23</ToIDValue>
+              <ToType>Step</ToType>
+              <IDScope>Internal</IDScope>
+            </ToID>
+            <LinkType>ParallelDivergent</LinkType>
+            <Depiction>Line</Depiction>
+          </Link>
+          <Link>
+            <ID>19</ID>
+            <FromID>
+              <FromIDValue>21</FromIDValue>
+              <FromType>Step</FromType>
+              <IDScope>Internal</IDScope>
+            </FromID>
+            <FromID>
+              <FromIDValue>23</FromIDValue>
+              <FromType>Step</FromType>
+              <IDScope>Internal</IDScope>
+            </FromID>
+            <ToID>
+              <ToIDValue>25</ToIDValue>
+              <ToType>Step</ToType>
+              <IDScope>Internal</IDScope>
+            </ToID>
+            <LinkType>ParallelConvergent</LinkType>
+            <Depiction>Line</Depiction>
+          </Link>
+          <Step>
+            <ID>14</ID>
+            <RecipeElementID>13</RecipeElementID>
+            <RecipeElementVersion>0</RecipeElementVersion>
+          </Step>
+          <Step>
+            <ID>17</ID>
+            <RecipeElementID>16</RecipeElementID>
+            <RecipeElementVersion>0</RecipeElementVersion>
+          </Step>
+          <Step>
+            <ID>21</ID>
+            <RecipeElementID>20</RecipeElementID>
+            <RecipeElementVersion>0</RecipeElementVersion>
+          </Step>
+          <Step>
+            <ID>23</ID>
+            <RecipeElementID>22</RecipeElementID>
+            <RecipeElementVersion>0</RecipeElementVersion>
+          </Step>
+          <Step>
+            <ID>25</ID>
+            <RecipeElementID>24</RecipeElementID>
+            <RecipeElementVersion>0</RecipeElementVersion>
+          </Step>
+        </ProcedureLogic>
+        <RecipeElement>
+          <ID>13</ID>
+          <RecipeElementType>Begin</RecipeElementType>
+        </RecipeElement>
+        <RecipeElement>
+          <ID>16</ID>
+          <Description />
+          <RecipeElementType>Phase</RecipeElementType>
+          <Parameter>
+            <ID>setpointLevelMin</ID>
+            <ParameterType>ProcessParameter</ParameterType>
+            <Value>
+              <ValueString>8343759169072492380800272551346439319312905480606770053274984894980236041226673255521397980619108546194230459462572969362013825269760</ValueString>
+              <DataInterpretation>Constant</DataInterpretation>
+              <DataType>double</DataType>
+              <UnitOfMeasure />
+            </Value>
+            <FormulaParameterID xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">3</FormulaParameterID>
+          </Parameter>
+          <Parameter>
+            <ID>setpointLevelMax</ID>
+            <ParameterType>ProcessParameter</ParameterType>
+            <Value>
+              <ValueString>8343759169072492380800272551346439319312905480606770053274984894980236041226673255521397980619108546194230459462572969362013825269760</ValueString>
+              <DataInterpretation>Constant</DataInterpretation>
+              <DataType>double</DataType>
+              <UnitOfMeasure />
+            </Value>
+            <FormulaParameterID xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">1</FormulaParameterID>
+          </Parameter>
+          <PhaseInformation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+            <Label>1</Label>
+            <PhaseType>Process</PhaseType>
+            <Name>mixerOn</Name>
+            <ParentInstance>sFormulation</ParentInstance>
+            <OperatorAcknowledgmentModes>0</OperatorAcknowledgmentModes>
+            <OperatorCommentRequired>false</OperatorCommentRequired>
+            <Report />
+            <AppendDescription>false</AppendDescription>
+            <ContinueMode>false</ContinueMode>
+            <DocumentViewType>None</DocumentViewType>
+            <DocumentViewPath />
+            <DocumentViewDescription />
+          </PhaseInformation>
+        </RecipeElement>
+        <RecipeElement>
+          <ID>20</ID>
+          <Description />
+          <RecipeElementType>Phase</RecipeElementType>
+          <PhaseInformation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+            <Label>2</Label>
+            <PhaseType>Process</PhaseType>
+            <Name>mixerOff</Name>
+            <ParentInstance>sFormulation</ParentInstance>
+            <OperatorAcknowledgmentModes>0</OperatorAcknowledgmentModes>
+            <OperatorCommentRequired>false</OperatorCommentRequired>
+            <Report />
+            <AppendDescription>false</AppendDescription>
+            <ContinueMode>false</ContinueMode>
+            <DocumentViewType>None</DocumentViewType>
+            <DocumentViewPath />
+            <DocumentViewDescription />
+          </PhaseInformation>
+        </RecipeElement>
+        <RecipeElement>
+          <ID>22</ID>
+          <Description />
+          <RecipeElementType>Phase</RecipeElementType>
+          <Parameter>
+            <ID>setpointLevelMin</ID>
+            <ParameterType>ProcessParameter</ParameterType>
+            <Value>
+              <ValueString>8343759169072492380800272551346439319312905480606770053274984894980236041226673255521397980619108546194230459462572969362013825269760</ValueString>
+              <DataInterpretation>Constant</DataInterpretation>
+              <DataType>double</DataType>
+              <UnitOfMeasure />
+            </Value>
+            <FormulaParameterID xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">4</FormulaParameterID>
+          </Parameter>
+          <Parameter>
+            <ID>setpointLevelMax</ID>
+            <ParameterType>ProcessParameter</ParameterType>
+            <Value>
+              <ValueString>8343759169072492380800272551346439319312905480606770053274984894980236041226673255521397980619108546194230459462572969362013825269760</ValueString>
+              <DataInterpretation>Constant</DataInterpretation>
+              <DataType>double</DataType>
+              <UnitOfMeasure />
+            </Value>
+            <FormulaParameterID xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">2</FormulaParameterID>
+          </Parameter>
+          <PhaseInformation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+            <Label>3</Label>
+            <PhaseType>Process</PhaseType>
+            <Name>mixerOn</Name>
+            <ParentInstance>sFormulation</ParentInstance>
+            <OperatorAcknowledgmentModes>0</OperatorAcknowledgmentModes>
+            <OperatorCommentRequired>false</OperatorCommentRequired>
+            <Report />
+            <AppendDescription>false</AppendDescription>
+            <ContinueMode>false</ContinueMode>
+            <DocumentViewType>None</DocumentViewType>
+            <DocumentViewPath />
+            <DocumentViewDescription />
+          </PhaseInformation>
+        </RecipeElement>
+        <RecipeElement>
+          <ID>24</ID>
+          <RecipeElementType>End</RecipeElementType>
+        </RecipeElement>
+        <OperationInformation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+          <Name>1</Name>
+        </OperationInformation>
+      </RecipeElement>
+      <RecipeElement>
+        <ID>28</ID>
+        <RecipeElementType>End</RecipeElementType>
+      </RecipeElement>
+      <UnitProcedureInformation xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+        <Name>Single</Name>
+        <ProcessInstance>sFormulation</ProcessInstance>
+      </UnitProcedureInformation>
+    </RecipeElement>
+    <RecipeElement>
+      <ID>32</ID>
+      <RecipeElementType>End</RecipeElementType>
+    </RecipeElement>
+    <Name xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">Simple</Name>
+    <RecipeState xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+      <Name>Production</Name>
+      <Description />
+      <DefaultState>true</DefaultState>
+      <Schedule>true</Schedule>
+      <ReadOnly>false</ReadOnly>
+    </RecipeState>
+    <RecipeType xmlns="http://www.wbf.org/xml/B2MML-V0401-AllExtensions">
+      <Name>Production</Name>
+      <Description />
+      <DefaultType>true</DefaultType>
+    </RecipeType>
+  </MasterRecipe>
+</BatchInformation>
