@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVEVA Batch Recipe Editor</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>AVEVA Batch · Offline Recipe Editor</h1>
+      <div class="sub" id="recipeTitle">No recipe loaded</div>
+    </div>
+    <button class="version-badge" id="versionBadge" type="button" hidden title="Revision history">
+      <span class="vb-label">Version</span><span class="vb-value" id="versionLabel">V0</span>
+    </button>
+  </header>
+
+  <nav class="toolbar" aria-label="Recipe actions">
+    <button type="button" data-cmd="new">+ New recipe</button>
+    <button type="button" class="primary" data-cmd="open">Open XML</button>
+    <button type="button" class="secondary" data-cmd="save" data-needs-doc>Save XML</button>
+    <input type="file" id="fileInput" accept=".xml" hidden>
+    <span class="sep"></span>
+    <button type="button" id="btnEdit" data-cmd="edit" data-needs-doc>✎ Edit</button>
+    <button type="button" data-cmd="undo" id="btnUndo" title="Undo (Ctrl+Z)" disabled>↶ Undo</button>
+    <button type="button" data-cmd="redo" id="btnRedo" title="Redo (Ctrl+Y)" disabled>↷ Redo</button>
+    <span class="sep"></span>
+    <button type="button" data-cmd="details" data-needs-doc>Recipe details</button>
+    <label class="tb-check"><input type="checkbox" id="showParams" checked> Parameters</label>
+    <button type="button" data-cmd="print" data-needs-doc>Print</button>
+    <span class="spacer"></span>
+    <span class="status" id="statusText"></span>
+  </nav>
+
+  <main class="content">
+    <div class="drop-zone" id="dropZone">
+      <p class="dz-main">Drop an AVEVA recipe XML here, or click to browse</p>
+      <p class="dz-sub">AVEVA Batch Management B2MML (MasterRecipe) export</p>
+    </div>
+
+    <section id="details" class="details" hidden>
+      <div class="card"><h3>Recipe header</h3><div id="headerBody"></div></div>
+      <div class="card"><h3>Equipment requirements</h3><div id="eqBody"></div></div>
+      <div class="card"><h3>Bill of materials</h3><div id="bomBody"></div></div>
+    </section>
+
+    <div id="cutBanner" class="cut-banner" hidden></div>
+
+    <section class="lanes" id="lanes" hidden>
+      <div class="lane" data-level="up">
+        <div class="lane-header"><span>Unit Procedures</span><span class="zoom" data-zoom="up"><button type="button" data-z="-1">−</button><span class="zl">100%</span><button type="button" data-z="1">+</button></span></div>
+        <div class="lane-body" id="laneUP"></div>
+      </div>
+      <div class="lane" data-level="op">
+        <div class="lane-header"><span id="opLaneTitle">Operations</span><span class="zoom" data-zoom="op"><button type="button" data-z="-1">−</button><span class="zl">100%</span><button type="button" data-z="1">+</button></span></div>
+        <div class="lane-body" id="laneOP"></div>
+      </div>
+      <div class="lane lane-wide" data-level="ph">
+        <div class="lane-header"><span id="phLaneTitle">Phases</span><span class="zoom" data-zoom="ph"><button type="button" data-z="-1">−</button><span class="zl">100%</span><button type="button" data-z="1">+</button></span></div>
+        <div class="lane-body" id="lanePH"></div>
+      </div>
+      <aside class="props" id="props" hidden>
+        <div class="props-head"><span id="propsTitle">Properties</span><button type="button" class="x" data-cmd="closeProps" title="Close">×</button></div>
+        <div class="props-body" id="propsBody"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="popover" class="popover" hidden></div>
+  <div id="modalBack" class="modal-back" hidden></div>
+  <div id="modal" class="modal" role="dialog" aria-modal="true" hidden>
+    <div class="modal-head"><span id="modalTitle"></span><button type="button" class="x" data-cmd="closeModal">×</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="printView" class="print-view"></div>
+  <datalist id="materialList"></datalist>
+
+  <!-- Site configuration (process classes, phases, transfers, materials) -->
+  <script src="config/model_SC.js"></script>
+  <script src="config/materials_SC.js"></script>
+  <!-- Core model: no UI code, unit-tested in /tests -->
+  <script src="js/core/xml.js"></script>
+  <script src="js/core/sfc.js"></script>
+  <script src="js/core/recipe-doc.js"></script>
+  <script src="js/core/edit-ops.js"></script>
+  <script src="js/core/actions.js"></script>
+  <!-- User interface -->
+  <script src="js/ui/lane-render.js"></script>
+  <script src="js/ui/panels.js"></script>
+  <script src="js/ui/app.js"></script>
+</body>
+</html>
